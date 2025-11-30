@@ -60,6 +60,19 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Supabase configuration
+
+1. Create a Supabase project and run the SQL in `SUPABASE_SETUP.md` (and the migrations under `supabase/migrations`) to provision tables, policies, and storage.  
+2. In the project root, create a `.env.local` (or `.env`) file with your project credentials:
+
+```
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
+
+3. Restart the dev server so Vite can pick up the new environment variables.  
+4. The generated Supabase client in `src/integrations/supabase/client.ts` automatically reads these values and is shared across services such as the Gmail alert integration.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/11c8041a-a771-4ee0-a8bc-2d7c14436f80) and click on Share -> Publish.

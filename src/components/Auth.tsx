@@ -25,29 +25,39 @@ const Auth = () => {
         : await signIn(email, password);
 
       if (error) {
-        if (error.message.includes('Invalid login credentials')) {
+        console.error('Auth error:', error);
+        
+        // Handle specific error cases
+        if (error.message?.includes('Invalid login credentials') || error.message?.includes('Invalid credentials')) {
           toast({
             title: "Login Failed",
             description: "Invalid email or password. Please try again.",
             variant: "destructive",
           });
-        } else if (error.message.includes('User already registered')) {
+        } else if (error.message?.includes('User already registered') || error.message?.includes('already registered')) {
           toast({
             title: "Account exists",
             description: "An account with this email already exists. Please sign in instead.",
             variant: "destructive",
           });
           setIsSignUp(false);
-        } else if (error.message.includes('Email not confirmed')) {
+        } else if (error.message?.includes('Email not confirmed') || error.message?.includes('not confirmed')) {
           toast({
             title: "Email Verification Required",
             description: "Please check your email and click the verification link to complete registration.",
             variant: "destructive",
           });
+        } else if (error.message?.includes('Email rate limit')) {
+          toast({
+            title: "Too Many Requests",
+            description: "Please wait a few minutes before trying again.",
+            variant: "destructive",
+          });
         } else {
+          // Show the actual error message for debugging
           toast({
             title: isSignUp ? "Sign Up Failed" : "Sign In Failed",
-            description: error.message,
+            description: error.message || error.toString() || "An unknown error occurred. Please check the console for details.",
             variant: "destructive",
           });
         }
@@ -64,10 +74,11 @@ const Auth = () => {
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Unexpected auth error:', error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred. Please try again.",
+        description: error?.message || "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {

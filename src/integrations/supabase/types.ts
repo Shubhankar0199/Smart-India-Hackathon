@@ -55,6 +55,62 @@ export type Database = {
           },
         ]
       }
+      gmail_alerts: {
+        Row: {
+          email_error: string | null
+          email_method: string | null
+          email_sent: boolean
+          id: string
+          location: string
+          mine_id: string | null
+          mine_name: string
+          risk_percentage: number
+          risk_probability: number
+          risk_type: string
+          timestamp: string
+          user_email: string
+          user_id: string | null
+        }
+        Insert: {
+          email_error?: string | null
+          email_method?: string | null
+          email_sent?: boolean
+          id?: string
+          location: string
+          mine_id?: string | null
+          mine_name: string
+          risk_percentage: number
+          risk_probability: number
+          risk_type: string
+          timestamp?: string
+          user_email: string
+          user_id?: string | null
+        }
+        Update: {
+          email_error?: string | null
+          email_method?: string | null
+          email_sent?: boolean
+          id?: string
+          location?: string
+          mine_id?: string | null
+          mine_name?: string
+          risk_percentage?: number
+          risk_probability?: number
+          risk_type?: string
+          timestamp?: string
+          user_email?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gmail_alerts_mine_id_fkey"
+            columns: ["mine_id"]
+            isOneToOne: false
+            referencedRelation: "mines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mines: {
         Row: {
           created_at: string

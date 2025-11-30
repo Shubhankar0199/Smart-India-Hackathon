@@ -2,8 +2,19 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://xrfreauhawplgphgdjvp.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZnJlYXVoYXdwbGdwaGdkanZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMDMwMjgsImV4cCI6MjA3MjY3OTAyOH0.hF9ra8R2Oj1pMNGqkXDNpDAmd6eRYYiT6uz8tVk8chI";
+const FALLBACK_SUPABASE_URL = 'https://yscoxfwyadefqevzgtnm.supabase.co';
+const FALLBACK_SUPABASE_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlzY294Znd5YWRlZnFldnpndG5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc1ODAzMzgsImV4cCI6MjA3MzE1NjMzOH0.Wp-QFVrr_vTsl1251zBvKS8CBapISFC55uIMqgSkZ8s';
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || FALLBACK_SUPABASE_URL;
+const SUPABASE_PUBLISHABLE_KEY =
+  import.meta.env.VITE_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_KEY;
+
+if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+  console.warn(
+    'Using fallback Supabase credentials. Please add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env.local to connect your own project.'
+  );
+}
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
